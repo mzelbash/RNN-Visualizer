@@ -1,0 +1,1 @@
+{"private":true,"type":"module","scripts":{"test":"node tests/rnn.test.js","start":"python -m http.server 8000"}}

@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>RNN Visualizer · A sentence, one step at a time</title>
+  <link rel="stylesheet" href="styles.css">
+  <script>window.MathJax={tex:{inlineMath:[['\\(','\\)']]},startup:{typeset:false}};</script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-chtml.js"></script>
+  <script type="module" src="js/app.js"></script>
+</head>
+<body>
+<main>
+  <aside id="controls-panel" class="controls panel"><div class="brand"><a class="eyebrow" href="../index.html">NN VISUALIZER / LEARNING LAB</a><h1>RNN Visualizer</h1><p class="author">Dr. Elbasheer</p><p>A sentence, one step at a time.</p></div><h2>Setup</h2>
+    <form id="controls">
+      <label for="sentence">Sentence</label><textarea id="sentence" rows="3">The cat sat on the mat</textarea>
+      <p class="hint">Whitespace tokenization. Words are case-sensitive.</p>
+      <label for="maximum">Maximum Sequence Length</label><input id="maximum" type="number" min="1" max="12" step="1" value="8" required>
+      <div class="pair"><div><label for="embedding">Embedding Size</label><input id="embedding" type="number" min="1" max="128" step="1" list="sizes" value="4" required></div><div><label for="hidden">Hidden Size</label><input id="hidden" type="number" min="1" max="128" step="1" list="sizes" value="3" required></div></div>
+      <datalist id="sizes"><option value="2"><option value="3"><option value="4"><option value="5"><option value="6"><option value="8"><option value="16"><option value="32"><option value="64"><option value="128"></datalist>
+      <label for="activation">Activation</label><input id="activation" value="tanh" readonly>
+      <label for="initial">Initial Hidden State</label><select id="initial"><option value="zeros">Zeros</option><option value="random">Random</option></select>
+      <label for="weights">Weight Initialization</label><select id="weights" aria-describedby="weights-note"><option value="small">Small Random</option><option value="xavier">Xavier Uniform</option><option value="zeros">Zeros</option></select>
+      <p id="weights-note" class="hint">Initializes Wₓ and Wₕ. Bias is zero; embeddings and the initial hidden state are controlled separately. Select Build RNN to apply.</p>
+      <label for="seed">Seed</label><input id="seed" type="number" min="0" max="4294967295" step="1" value="42" required>
+      <label for="output-mode">Output Mode</label><select id="output-mode"><option value="none">None</option><option value="every">Every timestep</option><option value="final">Final real token only</option></select>
+      <label for="output-size">Output Size (classes)</label><input id="output-size" type="number" min="2" max="8" step="1" value="3" required>
+      <p class="hint">Optional untrained classification demo. Three outputs in every-timestep mode use Noun / Verb / Other labels. Other configurations use generic classes. Output weights use the selected initialization.</p>
+      <button class="primary build" type="submit">Build RNN</button><p id="dirty" class="hint" role="status">All calculations happen in your browser.</p>
+    </form>
+    <div class="teaching"><h3>The recurrent idea</h3><p>Each word brings new information. The hidden state carries information from the words before it.</p><div class="formula">h<sub>t</sub> = tanh(W<sub>x</sub>x<sub>t</sub> + W<sub>h</sub>h<sub>t−1</sub> + b)</div></div>
+  </aside>
+  <section class="workspace">
+    <nav class="canvas-toolbar" aria-label="Canvas layout"><button id="toggle-controls" aria-controls="controls-panel" aria-expanded="true">Hide controls</button><span class="badge">VANILLA RNN · FORWARD PASS</span><button id="toggle-details" aria-controls="details-panel" aria-expanded="true">Hide details</button></nav>
+    <section class="panel"><div class="section-head"><h2><span class="number">02</span> From sentence to sequence</h2><span id="counts" class="badge"></span></div><div id="tokens" class="tokens"></div><p id="sequence-note"></p><div id="truncated"></div>
+      <details id="embeddings"><summary>Simulated Embeddings</summary><p class="hint">These values are generated only for visualization. In a real model, embeddings are usually learned.</p><div id="embedding-table" class="scroll"></div></details>
+    </section>
+    <section class="panel network-panel"><div class="section-head"><h2><span class="number">03</span> Follow the hidden state</h2><label class="mode">View <select id="view"><option value="neuron">Neuron View</option><option value="vector">Vector View</option></select></label></div>
+      <div class="shared"><div><strong>Same RNN cell reused at every timestep</strong><p title="The same parameters are reused at every timestep.">Shared parameters: Wₓ, Wₕ, b</p></div><button id="shared" aria-pressed="false">Highlight Shared Weights</button></div>
+      <p id="shared-note" class="hint" hidden>All timesteps use the same Wₓ, Wₕ, and b.</p><p id="mode-note" class="hint"></p>
+      <div id="network" class="network scroll" aria-label="Unrolled recurrent neural network"></div>
+      <div class="step-controls"><button id="reset">Reset</button><button id="previous">Previous Step</button><button id="next">Next Step</button><button id="run" class="primary">Run All</button><strong id="progress" aria-live="polite"></strong></div>
+      <p class="hint">This visualizer uses zero embeddings for PAD tokens. Real systems often use masking so padded positions do not affect later computation.</p>
+    </section>
+  </section>
+  <aside id="details-panel" class="panel inspector"><h2><span class="number">04</span> Inspect a timestep</h2><div id="detail"></div></aside>
+</main>
+<footer>SIMULATED EMBEDDINGS · REAL NUMERICAL FORWARD PASS · NO TRAINING</footer>
+</body></html>
+
