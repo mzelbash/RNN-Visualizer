@@ -6,6 +6,10 @@ An interactive educational application that shows how a vanilla recurrent neural
 
 All calculations run in the browser. No backend, model training, or build step is required.
 
+## Try it live   
+
+https://mzelbash.github.io/RNN-Visualizer/
+
 ## Run locally
 
 From the project folder containing `rnn/`, run:
