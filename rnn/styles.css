@@ -19,3 +19,11 @@ summary{font-size:16px}.vector-label{font-size:15px}.dimension-list{font-size:14
 @media(max-width:760px){main,main.controls-hidden,main.details-hidden{display:flex;padding:12px}.canvas-toolbar .badge{display:none}.canvas-toolbar{position:sticky;top:0;background:#eef2faf2;padding:10px 0;z-index:2}h2{font-size:22px}.hero-equation{font-size:23px}.numeric-operation{justify-content:flex-start}.brand{margin-bottom:18px}}
 .output-vectors{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}.output-vectors .vector-label{grid-row:1}.output-vectors .vector{grid-row:2}#output-calculation{scroll-margin-top:65px}#output-calculation>p{line-height:1.6}
 @media(max-width:760px){.output-vectors{display:block}}
+
+/* Give Setup a clear visual identity and make field labels easier to scan. */
+.controls > h2{background:linear-gradient(110deg,#6241ad,#3869ae);color:#fff;font-size:26px;font-weight:750;letter-spacing:.2px;padding:14px 18px;border-radius:10px;margin:0 0 22px;box-shadow:0 4px 12px #6241ad18}
+.controls form > label,.controls .pair label,.controls #output-size-control label{color:#54348d;font-size:15px;font-weight:750;margin-top:21px;margin-bottom:8px}
+.controls form > label[for="sentence"]{color:#215fa9}
+.controls form > label[for="output-mode"],.controls label[for="output-size"]{color:#944468}
+.controls input:not([readonly]),.controls select{background:#faf9ff;border-color:#cfc6e3}
+.controls input:focus,.controls select:focus,.controls textarea:focus{border-color:#8062bd;box-shadow:0 0 0 3px #8062bd12}
