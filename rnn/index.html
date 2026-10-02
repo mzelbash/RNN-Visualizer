@@ -23,7 +23,7 @@
       <p id="weights-note" class="hint">Initializes Wₓ and Wₕ. Bias is zero; embeddings and the initial hidden state are controlled separately. Select Build RNN to apply.</p>
       <label for="seed">Seed</label><input id="seed" type="number" min="0" max="4294967295" step="1" value="42" required>
       <label for="output-mode">Output Mode</label><select id="output-mode"><option value="none">None</option><option value="every">Every timestep</option><option value="final">Final real token only</option></select>
-      <label for="output-size">Output Size (classes)</label><input id="output-size" type="number" min="2" max="8" step="1" value="3" required>
+      <div id="output-size-control" hidden><label for="output-size">Output Size (classes)</label><input id="output-size" type="number" min="2" max="8" step="1" value="3" required disabled></div>
       <p class="hint">Optional untrained classification demo. Three outputs in every-timestep mode use Noun / Verb / Other labels. Other configurations use generic classes. Output weights use the selected initialization.</p>
       <button class="primary build" type="submit">Build RNN</button><p id="dirty" class="hint" role="status">All calculations happen in your browser.</p>
     </form>

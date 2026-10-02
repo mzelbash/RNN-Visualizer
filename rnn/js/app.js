@@ -34,11 +34,18 @@ function build(event) {
   const sequence=preprocess($('sentence').value,Number($('maximum').value));
   const embeddingMap=embeddings(sequence.tokens,E,seed), parameters=initialize(E,H,seed,initial,$('weights').value);
   model={E,H,seed,initial,sequence,embeddingMap,parameters,steps:forward(sequence.tokens,embeddingMap,parameters)};
-  model.outputMode=$('output-mode').value; model.O=Number($('output-size').value);
+  model.outputMode=$('output-mode').value; model.O=model.outputMode==='none'?3:Number($('output-size').value);
   model.output=outputLayer(model.steps,H,model.O,seed,$('weights').value,model.outputMode);
   selected=-1; $('dirty').textContent=`Built with ${$('weights').selectedOptions[0].text}, seed ${seed}. Bias is zero.`; render(); $('network').scrollLeft=0;
 }
 $('controls').addEventListener('submit',build);
+function updateOutputSizeVisibility() {
+  const enabled = $('output-mode').value !== 'none';
+  $('output-size-control').hidden = !enabled;
+  $('output-size').disabled = !enabled;
+}
+$('output-mode').addEventListener('change', updateOutputSizeVisibility);
+updateOutputSizeVisibility();
 $('controls').addEventListener('input',()=>{$('dirty').textContent='Settings changed. Select Build RNN to apply.';stop();});
 $('reset').addEventListener('click',()=>choose(-1,false));
 $('previous').addEventListener('click',()=>choose(selected-1));
